@@ -4,8 +4,9 @@
 
    사용자는 그림을 저장, 불러오기, 지우기, 실행 및 종료가 가능합니다.
 
-https://youtu.be/TB67CnYbMCw 
-실행 동영상
+https://youtu.be/r_SaZ05KlQM
+
+실행 동영상 링크
 
 # main 함수
 
