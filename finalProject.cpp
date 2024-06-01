@@ -22,7 +22,7 @@ Mat drawLine() {
 	rectangle(src, Rect(0, 0, 700, 500), Scalar(0, 0, 0), 2);
 	rectangle(src, Rect(500, 0, 200, 100), Scalar(0, 0, 0), 2);		// save block
 	rectangle(src, Rect(500, 100, 200, 100), Scalar(0, 0, 0), 2);		// load block
-	rectangle(src, Rect(500, 200, 200, 100), Scalar(0, 0, 0), 2);		// clear block
+	rectangle(src, Rect(500, 200, 200, 100), Scalar(0, 0, 0), 2);		// clear	block
 	rectangle(src, Rect(500, 300, 200, 100), Scalar(0, 0, 0), 2);		// run block
 	rectangle(src, Rect(500, 400, 200, 100), Scalar(0, 0, 0), 2);		// exit block
 	const string text[] = { "Save", "Load", "Clear", "Run", "Exit" };
@@ -42,12 +42,13 @@ void on_mouse(int event, int x, int y, int flags, void* userdata) {
 	switch (event) {
 	case EVENT_LBUTTONDOWN:
 		pt0ld = Point(x, y);
-		if (Point(x, y).inside(Rect(500, 200, 200, 100))) {		// clear
-			(*(Mat*)userdata)(Rect(0, 0, 500, 500)) = Scalar(255, 255, 255);
-			cout << "입력창 삭제됨" << endl;
-			imshow("Windows", (*(Mat*)userdata));
-		}
-		else if (Point(x, y).inside(Rect(500, 0, 200, 100))) {		// save
+        if (Rect(500, 200, 200, 100).contains(Point(x, y))) {       // clear
+            (*(Mat*)userdata)(Rect(0, 0, 500, 500)) = Scalar(255, 255, 255);
+            rectangle((*(Mat*)userdata), Rect(0, 0, 500, 500), Scalar(0), 2);
+            cout << "입력창 삭제됨" << endl;
+            imshow("Windows", (*(Mat*)userdata));
+        }
+		else if (Rect(500, 0, 200, 100).contains(Point(x, y))) {		// save
 			string fileName;
 			Mat save = (*(Mat*)userdata)(Rect(1, 1, 499, 499)).clone();
 			resize(save, save, Size(500, 500));
@@ -56,19 +57,19 @@ void on_mouse(int event, int x, int y, int flags, void* userdata) {
 			imwrite(fileName, save);
 			cout << fileName << "이 저장됨" << endl;
 		}
-		else if (Point(x, y).inside(Rect(500, 100, 200, 100))) {		// load
+		else if (Rect(500, 100, 200, 100).contains(Point(x, y))) {		// load
 			string fileName;
 			cout << "파일명을 입력하시오: ";
 			cin >> fileName;
 			Mat numberImg = imread(fileName);
-			rectangle(numberImg, Rect(0, 0, 500, 500), Scalar(0), 2);
+            rectangle(numberImg, Rect(0, 0, 500, 500), Scalar(0), 2);
 			numberImg.copyTo((*(Mat*)userdata)(Rect(0, 0, 500, 500)));
 			imshow("Windows", (*(Mat*)userdata));
 		}
-		else if (Point(x, y).inside(Rect(500, 400, 200, 100))) {		// exit
+		else if (Rect(500, 400, 200, 100).contains(Point(x, y))) {		// exit
 			exit(1);
 		}
-		else if (Point(x, y).inside(Rect(500, 300, 200, 100))) {		// run
+		else if (Rect(500, 300, 200, 100).contains(Point(x, y))) {		// run
 
 		}
 		break;
