@@ -32,7 +32,10 @@ Mat drawLine() {
 	for (int i = 0; i < 5; i++) {
 		Size sizeText = getTextSize(text[i], fontFace, fontScale, thickness, 0);
 		Size sizeImg = src.size();
-		Point org(250 + (sizeImg.width - sizeText.width) / 2, 500 * i / 5 + (sizeImg.height + sizeText.height) / 8);
+		int buttonXStart = 500;
+		int buttonWidth = 200;
+		Point org(buttonXStart + (buttonWidth - sizeText.width) / 2, 500 * i / 5 + (sizeImg.height + sizeText.height) / 8);
+
 		putText(src, text[i], org, fontFace, fontScale, Scalar(0), thickness);
 	}
 	return src;
@@ -42,12 +45,12 @@ void on_mouse(int event, int x, int y, int flags, void* userdata) {
 	switch (event) {
 	case EVENT_LBUTTONDOWN:
 		pt0ld = Point(x, y);
-        if (Rect(500, 200, 200, 100).contains(Point(x, y))) {       // clear
-            (*(Mat*)userdata)(Rect(0, 0, 500, 500)) = Scalar(255, 255, 255);
-            rectangle((*(Mat*)userdata), Rect(0, 0, 500, 500), Scalar(0), 2);
-            cout << "입력창 삭제됨" << endl;
-            imshow("Windows", (*(Mat*)userdata));
-        }
+		if (Rect(500, 200, 200, 100).contains(Point(x, y))) {       // clear
+			(*(Mat*)userdata)(Rect(0, 0, 500, 500)) = Scalar(255, 255, 255);
+			rectangle((*(Mat*)userdata), Rect(0, 0, 500, 500), Scalar(0), 2);
+			cout << "입력창 삭제됨" << endl;
+			imshow("Windows", (*(Mat*)userdata));
+		}
 		else if (Rect(500, 0, 200, 100).contains(Point(x, y))) {		// save
 			string fileName;
 			Mat save = (*(Mat*)userdata)(Rect(1, 1, 499, 499)).clone();
@@ -62,7 +65,7 @@ void on_mouse(int event, int x, int y, int flags, void* userdata) {
 			cout << "파일명을 입력하시오: ";
 			cin >> fileName;
 			Mat numberImg = imread(fileName);
-            rectangle(numberImg, Rect(0, 0, 500, 500), Scalar(0), 2);
+			rectangle(numberImg, Rect(0, 0, 500, 500), Scalar(0), 2);
 			numberImg.copyTo((*(Mat*)userdata)(Rect(0, 0, 500, 500)));
 			imshow("Windows", (*(Mat*)userdata));
 		}
