@@ -46,10 +46,10 @@ void on_mouse(int event, int x, int y, int flags, void* userdata) {
 	case EVENT_LBUTTONDOWN:
 		pt0ld = Point(x, y);
 		if (Rect(500, 200, 200, 100).contains(Point(x, y))) {       // clear
-			(*(Mat*)userdata)(Rect(0, 0, 500, 500)) = Scalar(255, 255, 255);
-			rectangle((*(Mat*)userdata), Rect(0, 0, 500, 500), Scalar(0), 2);
+			(*(Mat*)userdata)(Rect(0, 0, 500, 500)) = Scalar(255, 255, 255);		// userdata를 Mat 타입으로 캐스팅하고 이를 참조하여 500x500 영역을 흰색으로 채움
+			rectangle((*(Mat*)userdata), Rect(0, 0, 500, 500), Scalar(0), 2);		// 같은 Mat 객체에 검은색 테두리를 그림
 			cout << "입력창 삭제됨" << endl;
-			imshow("Windows", (*(Mat*)userdata));
+			imshow("Windows", (*(Mat*)userdata));						 // 변경된 이미지를 다시 표시함
 		}
 		else if (Rect(500, 0, 200, 100).contains(Point(x, y))) {		// save
 			string fileName;
